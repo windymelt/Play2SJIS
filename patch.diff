@@ -135,3 +135,5 @@ diff -ru play-2.2.1 2/framework/src/sbt-plugin/src/main/scala/play/Project.scala
        .settings(settings: _*)
    }
 -}
+\ No newline at end of file
++}
