@@ -93,26 +93,26 @@
      import scala.collection.mutable.{ HashMap }
  
      var params = HashMap.empty[String, Seq[String]]
-@@ -17,8 +17,8 @@
-       if (param.contains('=')) {
- 
-         val parts = param.split('=')
--        val key = URLDecoder.decode(parts.head, encoding)
--        val value = URLDecoder.decode(parts.tail.headOption.getOrElse(""), encoding)
-+        val key = new URLCodec(encoding).decode(parts.head, encoding)
-+        val value = new URLCodec(encoding).decode(parts.tail.headOption.getOrElse(""), encoding)
- 
-         params += key -> (params.get(key).getOrElse(Seq.empty) :+ value)
+@@ -17,7 +17,7 @@
+      if (param.contains('=')) {
+
+        val parts = param.split('=')
+-       val key = URLDecoder.decode(parts.head, encoding)
+-       val value = URLDecoder.decode(parts.tail.headOption.getOrElse(""), encoding)
++       val key = new URLCodec(encoding).decode(parts.head, encoding)
++       val value = new URLCodec(encoding).decode(parts.tail.headOption.getOrElse(""), encoding)
+
+        params += key -> (params.get(key).getOrElse(Seq.empty) :+ value)
 --- play-2.2.1 2/framework/src/sbt-plugin/src/main/scala/play/Project.scala	 2013-10-30 16:44:48.000000000 +0900
 +++ play-2.2.1/framework/src/sbt-plugin/src/main/scala/play/Project.scala	 2013-11-08 18:08:03.000000000 +0900
-@@ -36,8 +36,8 @@
-       intellijCommandSettings ++
-       Seq(testListeners += testListener) ++
-       Seq(
--        scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "utf8"),
--        javacOptions in Compile ++= Seq("-encoding", "utf8", "-g")
-+        scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "Shift_JIS"),
-+        javacOptions in Compile ++= Seq("-encoding", "Shift_JIS", "-g")
-       )
- 
-   lazy val playJavaSettings: Seq[Setting[_]] =
+@@ -36,7 +36,7 @@
+      intellijCommandSettings ++
+      Seq(testListeners += testListener) ++
+      Seq(
+-       scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "utf8"),
+-       javacOptions in Compile ++= Seq("-encoding", "utf8", "-g")
++       scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "Shift_JIS"),
++       javacOptions in Compile ++= Seq("-encoding", "Shift_JIS", "-g")
+      )
+
+  lazy val playJavaSettings: Seq[Setting[_]] =
